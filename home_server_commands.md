@@ -22,15 +22,23 @@ sudo docker run -it --name z2m_assistant -p 8880:80 -e "Z2MA_SETTINGS__MQTTSERVE
 
 ## Полезные ссылки
 Install Docker Engine on Ubuntu: https://docs.docker.com/engine/install/ubuntu/
+
 Install Docker Compose: https://docs.docker.com/compose/install/
+
 DockerHub: https://hub.docker.com/
+
 Карта сети: https://dreampuf.github.io/GraphvizOnline/
 
 ##Команды Docker
+
 ###Показать все контейнеры:
+
 docker ps -a
+
 ###Показать образы:
+
 docker images
+
 ###Запустить контейнер:
 docker run -d --network=host --name home-assistant -p 8123:8123 -v /home/gofk/Docker/ha:/config --restart always gofk/homeassistant-rclone
 ###Остановить контейнер:
