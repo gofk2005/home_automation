@@ -12,52 +12,39 @@ sudo docker run -it -p 1883:1883 -p 9001:9001 --name mosquitto -v /home/gofk/doc
 
 ## ESPHome
 sudo docker run --net=host --name esphome -v /home/gofk/docker/esphome/config:/config -it --restart always esphome/esphome
-
 ## Zigbee2MQTT
 sudo docker run -it --name zigbee2mqtt -p 8081:8081 -v /home/gofk/docker/zigbee2mqtt/data:/app/data --device=/dev/ttyACM0 -e TZ=Europe/Moscow -v /run/udev:/run/udev:ro --privileged=true --restart always koenkk/zigbee2mqtt
-
 ## Zigbee2MQTT Assistant
 sudo docker run -it --name z2m_assistant -p 8880:80 -e "Z2MA_SETTINGS__MQTTSERVER=192.168.0.100" --restart always carldebilly/zigbee2mqttassistant
-
-
 ## Полезные ссылки
 Install Docker Engine on Ubuntu: https://docs.docker.com/engine/install/ubuntu/
-
 Install Docker Compose: https://docs.docker.com/compose/install/
-
 DockerHub: https://hub.docker.com/
-
 Карта сети: https://dreampuf.github.io/GraphvizOnline/
-
-##Команды Docker
-
-###Показать все контейнеры:
-
+## Команды Docker
+### Показать все контейнеры:
 docker ps -a
-
-###Показать образы:
-
+### Показать образы:
 docker images
-
-###Запустить контейнер:
+### Запустить контейнер:
 docker run -d --network=host --name home-assistant -p 8123:8123 -v /home/gofk/Docker/ha:/config --restart always gofk/homeassistant-rclone
-###Остановить контейнер:
+### Остановить контейнер:
 docker stop home-assistant 
-###Удалить контейнер:
+### Удалить контейнер:
 docker rm home-assistant 
-###Удалить все образы:
+### Удалить все образы:
 docker rmi -f $(docker images -q)
-###Зайти в контейнер:
+### Зайти в контейнер:
 docker exec -it home-assistant bash
-###Создать образ из контейнера:
+### Создать образ из контейнера:
 docker commit -m "Add rclone" -a "gofk2005@yandex.ru" 857fe49f9eb4 home-assistant:gofk
-###Прописать теги:
+### Прописать теги:
 docker tag homeassistant-rclone gofk/homeassistant-rclone:v2
-###Собрать образ с использование Dockerfile:
+### Собрать образ с использование Dockerfile:
 docker build -t homeassistant-rclone .  
-###Отправить в DockerHub:
+### Отправить в DockerHub:
 docker push gofk/homeassistant-rclone:v2
-##Полезное:
-###идентификация USB-устройств:
+## Полезное:
+### идентификация USB-устройств:
 ls -l /dev/tty*
 ls -l /dev/serial/by-id
