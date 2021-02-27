@@ -18,8 +18,11 @@ sudo docker run -it --name zigbee2mqtt -p 8081:8081 -v /home/gofk/docker/zigbee2
 sudo docker run -it --name z2m_assistant -p 8880:80 -e "Z2MA_SETTINGS__MQTTSERVER=192.168.0.100" --restart always carldebilly/zigbee2mqttassistant
 ## Полезные ссылки
 Install Docker Engine on Ubuntu: https://docs.docker.com/engine/install/ubuntu/
+
 Install Docker Compose: https://docs.docker.com/compose/install/
+
 DockerHub: https://hub.docker.com/
+
 Карта сети: https://dreampuf.github.io/GraphvizOnline/
 ## Команды Docker
 ### Показать все контейнеры:
@@ -47,4 +50,5 @@ docker push gofk/homeassistant-rclone:v2
 ## Полезное:
 ### идентификация USB-устройств:
 ls -l /dev/tty*
+
 ls -l /dev/serial/by-id
