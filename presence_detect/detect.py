@@ -6,7 +6,7 @@ Implemented support for the "MQTT Discovery" module for Home Assistant.
 
 Email: gofk2005@yandex.ru
 Youtube channel: https://www.youtube.com/channel/UCUh89-ti4wwvwrm8nCZkz8Q
-Video review: 
+Video review: https://youtu.be/WYWG3oeO04M
 Source: https://github.com/gofk2005/python/tree/master/people_detect
 Docker image: https://hub.docker.com/repository/docker/gofk/presence_detect
 '''
