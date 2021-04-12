@@ -1,0 +1,122 @@
+# Видео: https://youtu.be/nacVHgHOeOw
+
+globals:
+  - id: var1
+    type: float
+  - id: var2
+    type: float
+  - id: var3
+    type: float
+  - id: var4
+    type: float
+  - id: var5
+    type: float
+    
+substitutions:
+  plug_name: sh_pet_feeder
+
+esphome:
+  name: ${plug_name}
+  platform: ESP8266
+  board: esp01_1m
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  
+  ap:
+    ssid: ${plug_name}_AP
+    password: !secret ap_password
+
+captive_portal:
+
+logger:
+
+mqtt:
+  broker: 192.168.0.100
+  
+#api:
+#  password: !secret api_password
+
+ota:
+  password: !secret ota_password
+
+dallas:
+  - pin: GPIO5
+
+sensor:
+  - platform: uptime
+    name: ${plug_name}_uptime
+  - platform: dallas
+    address: 0x120300A2791B7B28
+    name: ${plug_name}_temperature
+    id: temperature
+    on_value:
+      then:
+      - globals.set:
+          id: var1
+          value: !lambda |-
+            return id(var2);
+      - globals.set:
+          id: var2
+          value: !lambda |-
+            return id(var3);
+      - globals.set:
+          id: var3
+          value: !lambda |-
+            return id(var4);
+      - globals.set:
+          id: var4
+          value: !lambda |-
+            return id(var5);
+      - globals.set:
+          id: var5
+          value: !lambda |-
+            return id(temperature).state;
+      - sensor.template.publish:
+          id: avg_temp
+          #state: !lambda "return ((id(var1)+id(var2)+id(var3)+id(var4)+id(var5))/5);"
+          state: !lambda |-
+            if (id(var1) && id(var2) && id(var3) && id(var4) && id(var5)) {
+              return ((id(var1)+id(var2)+id(var3)+id(var4)+id(var5))/5);
+            } else {
+              return id(var5);
+            }
+  - platform: template
+    name: ${plug_name}_avg_temperature
+    id: avg_temp
+    accuracy_decimals: 3
+    unit_of_measurement: "°C"
+    icon: "mdi:thermometer-lines"
+
+switch:
+  - platform: gpio
+    name: ${plug_name}_relay
+    pin: GPIO4
+    id: relay
+    
+binary_sensor:
+  - platform: gpio
+    id: ${plug_name}_limit_switch
+    name: ${plug_name}_limit_switch
+    pin: GPIO12
+    filters:
+      - delayed_on_off: 1000ms
+    on_release:
+      then:
+        - switch.turn_off: relay
+  - platform: gpio
+    id: ${plug_name}_btn
+    name: ${plug_name}_btn
+    pin: GPIO13
+
+time:
+  - platform: sntp
+    timezone: "Europe/Moscow"
+    on_time:
+      - seconds: 00
+        minutes: 00
+        hours: 05,11,17,23
+        then:
+          - switch.turn_on: relay
+
