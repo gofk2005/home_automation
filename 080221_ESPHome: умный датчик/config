@@ -1,3 +1,5 @@
+# Видео: https://youtu.be/91tQPOoWVbY
+
 globals:
   - id: delta_var
     type: float
