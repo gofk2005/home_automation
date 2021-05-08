@@ -1,0 +1,10 @@
+camera:
+  - platform: ffmpeg
+    name: reolink_ffmpeg
+    input: -rtsp_transport tcp -i rtsp://admin:111111@192.168.0.9:554/h264Preview_01_main
+  - platform: generic
+    still_image_url: http://192.168.0.9/cgi-bin/api.cgi?cmd=Snap&channel=0&rs=wuuPhkmUCeI9WG7C&user=admin&password=111111
+    stream_source: rtsp://192.168.0.9:554/h264Preview_01_sub
+    name: reolink_generic
+    username: admin
+    password: 111111
