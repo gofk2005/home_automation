@@ -16,6 +16,8 @@ sudo docker run --net=host --name esphome -v /home/gofk/docker/esphome/config:/c
 sudo docker run -it --name zigbee2mqtt -p 8081:8081 -v /home/gofk/docker/zigbee2mqtt/data:/app/data --device=/dev/ttyACM0 -e TZ=Europe/Moscow -v /run/udev:/run/udev:ro --privileged=true --restart always koenkk/zigbee2mqtt
 ## Zigbee2MQTT Assistant
 sudo docker run -it --name z2m_assistant -p 8880:80 -e "Z2MA_SETTINGS__MQTTSERVER=192.168.0.100" --restart always carldebilly/zigbee2mqttassistant
+## gogs
+sudo docker run --name=gogs -p 10022:22 -p 10880:3000 -v /home/gofk/docker/gogs:/data --restart always gogs/gogs
 ## Полезные ссылки
 Install Docker Engine on Ubuntu: https://docs.docker.com/engine/install/ubuntu/
 
